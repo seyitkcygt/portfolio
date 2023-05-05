@@ -7,10 +7,19 @@ export const Container = styled.div`
   flex-direction: column;
   background: black;
   padding: 2rem 0 2rem 0;
-  border-radius: 5rem ;
   margin-top: 3rem;
 
-  @media(max-width: 600px) {
+  clip-path: polygon(
+    20% 0%,
+    80% 0%,
+    100% 20%,
+    100% 80%,
+    80% 100%,
+    20% 100%,
+    0% 80%,
+    0% 20%
+  );
+  @media (max-width: 600px) {
     border-radius: 0;
   }
 `;
@@ -60,7 +69,7 @@ export const SVG = styled.div`
   inset: 0;
   width: 1px;
   & svg {
-    stroke-dasharray: ${({percent}) => percent} 100;
+    stroke-dasharray: ${({ percent }) => percent} 100;
     transition: all 3s;
   }
 

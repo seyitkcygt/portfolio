@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { Jumbotron } from "../../components";
-import { gsap } from "gsap";
+import { gsap, Bounce } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
 export default function JumbotronContainer() {
@@ -12,19 +12,35 @@ export default function JumbotronContainer() {
     let ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: "#projects",
-        start: "start start",
-        end: "center center", //TODO: work on this animation
+        start: "+=100",
+        end: "+=1000", //TODO: work on this animation
         markers: true,
         once: true,
         onEnter: () => {
-          gsap.to("#projects", {
-            borderRadius: 0,
-          });
+          gsap.to(
+            "#projects",
+            {
+              clipPath:
+                "polygon(20% 0%, 80% 0%, 100% 0%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 0%)",
+              // "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
+              duration: 1,
+              ease: Bounce.easeIn,
+            }
+            /*{
+             
+               clipPath:
+                "polygon(20% 0%, 80% 0%, 100% 0, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 0)",
+            }*/
+          );
         },
 
         onLeave: () => {
           gsap.to("#projects", {
-            borderRadius: "5rem",
+            clipPath:
+              "polygon(20% 0%, 80% 0%, 100% 0%, 100% 100%, 80% 100%, 20% 100%, 0% 100%, 0% 0%)",
+            // "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
+            duration: 1,
+            ease: Bounce.easeIn,
           });
         },
       });
