@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { Jumbotron } from "../../components";
-import { gsap, Bounce } from "gsap";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
 export default function JumbotronContainer() {
@@ -10,69 +10,29 @@ export default function JumbotronContainer() {
     gsap.registerPlugin(ScrollTrigger);
     // create our context. This function is invoked immediately and all GSAP animations and ScrollTriggers created during the execution of this function get recorded so we can revert() them later (cleanup)
     let ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: "#projects",
-        start: "+=100",
-        end: "+=1000", //TODO: work on this animation
-        markers: true,
-        once: true,
-        onEnter: () => {
-          gsap.to(
-            "#projects",
-            {
-              clipPath:
-                "polygon(20% 0%, 80% 0%, 100% 0%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 0%)",
-              // "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
-              duration: 1,
-              ease: Bounce.easeIn,
-            }
-            /*{
-             
-               clipPath:
-                "polygon(20% 0%, 80% 0%, 100% 0, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0 0)",
-            }*/
-          );
-        },
-
-        onLeave: () => {
-          gsap.to("#projects", {
-            clipPath:
-              "polygon(20% 0%, 80% 0%, 100% 0%, 100% 100%, 80% 100%, 20% 100%, 0% 100%, 0% 0%)",
-            // "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
-            duration: 1,
-            ease: Bounce.easeIn,
-          });
-        },
-      });
-      gsap.utils.toArray(".PictureContainer").forEach(function (elem) {
-        gsap.set(elem, { opacity: 0 });
-        ScrollTrigger.create({
-          trigger: elem,
-          start: "start center",
-          once: true,
-          onEnter: () => {
-            gsap.fromTo(
-              elem,
-              { x: -100, opacity: 0 },
-              { duration: 2, opacity: 1, x: 0 }
-            );
-          },
-        });
+      const minScale = 0.8;
+      const offset = 100;
+      const items = gsap.utils.toArray(".Item");
+      const distrubitor = gsap.utils.distribute({
+        base: minScale,
+        amount: 0.2,
       });
 
-      gsap.utils.toArray(".DetailContainer").forEach(function (elem) {
-        gsap.set(elem, { opacity: 0 });
-        ScrollTrigger.create({
-          trigger: elem,
-          start: "start center",
-          once: true,
-          onEnter: () => {
-            gsap.fromTo(
-              elem,
-              { x: 100, opacity: 0 },
-              { duration: 2, opacity: 1, x: 0 }
-            );
+      items.forEach((item, index) => {
+        const scaleVal = distrubitor(index, items[index], items);
+        const tween = gsap.to(item, {
+          scrollTrigger: {
+            trigger: item,
+            start: `top center+=${offset}`,
+            end: `bottom center+=${offset}`,
+            scrub: true,
+            // markers: true,
+            invalidateOnRefresh: true,
           },
+          //ease: "none",
+          yPercent: index * 12,
+          scale: scaleVal,
+         // opacity: scaleVal,
         });
       });
     }, comp); // <- IMPORTANT! Scopes selector text
@@ -83,15 +43,22 @@ export default function JumbotronContainer() {
   let obj = [1, 2, 3, 4, 5];
 
   return (
-    <Jumbotron id="projects" ref={comp}>
+    <Jumbotron ref={comp}>
       {obj.map((e) => {
         return (
-          <Jumbotron.Item key={e}>
+          <Jumbotron.Item
+            onClick={() => {
+              console.log(e);
+            }}
+            className="Item"
+            key={e}
+            file={`${e}`}
+          >
             <Jumbotron.PictureContainer className="PictureContainer">
               <Jumbotron.Picture></Jumbotron.Picture>
             </Jumbotron.PictureContainer>
             <Jumbotron.DetailContainer className="DetailContainer">
-              <Jumbotron.Title>Title</Jumbotron.Title>
+              <Jumbotron.Title>Title {e}</Jumbotron.Title>
               <Jumbotron.Detail>Detail about the project</Jumbotron.Detail>
 
               <Jumbotron.ImageLink

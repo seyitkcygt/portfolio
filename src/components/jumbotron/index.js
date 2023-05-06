@@ -9,7 +9,6 @@ import {
   Title,
   Detail,
   Image,
-  SVG,
 } from "./styles/jumbotron";
 
 import { VerticalSVG } from "../../constants/svg/github";
@@ -59,14 +58,6 @@ Jumbotron.ImageLink = function JumbotronLink({ src, alt, href, ...restProps }) {
     <a href={href}>
       <Image src={src} alt={alt} {...restProps} />
     </a>
-  );
-};
-
-Jumbotron.VerticalSVG = function JumbotronVerticalSVG({ ...restProps }) {
-  return (
-    <SVG {...restProps}>
-      <VerticalSVG />
-    </SVG>
   );
 };
 
