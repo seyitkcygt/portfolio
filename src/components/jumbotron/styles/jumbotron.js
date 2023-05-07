@@ -1,13 +1,14 @@
 import styled from "styled-components/macro";
 
 export const Container = styled.div`
+  --itemc: ${({ itemC }) => (itemC == null || itemC < 0 ? 1 : itemC)};
   position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 2rem 0 2rem 0;
   margin-top: 3rem;
-  height: 500px;
+  height: calc(700px + 25px * var(--itemc));
 
   @media (max-width: 600px) {
     border-radius: 0;
@@ -26,7 +27,7 @@ export const Item = styled.div`
   padding: 1rem;
 
   @media (max-width: 600px) {
-    flex-direction: column;
+    width: 400px;
   }
 
   &::after {

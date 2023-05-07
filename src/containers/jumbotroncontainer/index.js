@@ -10,12 +10,12 @@ export default function JumbotronContainer() {
     gsap.registerPlugin(ScrollTrigger);
     // create our context. This function is invoked immediately and all GSAP animations and ScrollTriggers created during the execution of this function get recorded so we can revert() them later (cleanup)
     let ctx = gsap.context(() => {
-      const minScale = 0.8;
+      const minScale = 0.9;
       const offset = 100;
       const items = gsap.utils.toArray(".Item");
       const distrubitor = gsap.utils.distribute({
         base: minScale,
-        amount: 0.2,
+        amount: 0.5,
       });
 
       items.forEach((item, index) => {
@@ -30,9 +30,9 @@ export default function JumbotronContainer() {
             invalidateOnRefresh: true,
           },
           //ease: "none",
-          yPercent: index * 12,
+          yPercent: index * 15,
           scale: scaleVal,
-         // opacity: scaleVal,
+          // opacity: scaleVal,
         });
       });
     }, comp); // <- IMPORTANT! Scopes selector text
@@ -43,7 +43,7 @@ export default function JumbotronContainer() {
   let obj = [1, 2, 3, 4, 5];
 
   return (
-    <Jumbotron ref={comp}>
+    <Jumbotron ref={comp} itemC={obj.length - 2}>
       {obj.map((e) => {
         return (
           <Jumbotron.Item

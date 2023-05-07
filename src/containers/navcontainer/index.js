@@ -3,6 +3,7 @@ import { NavBar } from "../../components";
 
 import { ScrollTrigger } from "gsap/all";
 import { gsap, Bounce } from "gsap";
+import MessageSVG from "../../constants/svg/mail";
 
 export default function NavContainer() {
   const [expanded, setExpanded] = useState(false);
@@ -42,6 +43,9 @@ export default function NavContainer() {
         top: "90vh",
         duration: 2,
         ease: Bounce.easeOut,
+      })
+      .to(messageRef.current, {
+        right: "1%",
       });
 
     let ctx = gsap.context(() => {}, containerRef); // <- IMPORTANT! Scopes selector text
@@ -75,11 +79,11 @@ export default function NavContainer() {
 
         <NavBar.Message
           onClick={() => {
-            //TODO: add contacts
+            //TODO: Opens a dialog box to speak with chatgpt
           }}
           ref={messageRef}
         >
-          SVG
+          <MessageSVG />
         </NavBar.Message>
       </NavBar.NavLinks>
     </NavBar>

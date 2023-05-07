@@ -109,10 +109,10 @@ export const Message = styled.div`
   top: 2%;
   right: 10%;
   transformorigin: center;
-  background: red;
   width: 3rem;
   aspect-ratio: 1;
   cursor: pointer;
+  outline: 3px solid grey;
 
   //after display flex
   align-items: center;
