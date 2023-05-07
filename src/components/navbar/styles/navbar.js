@@ -76,8 +76,6 @@ export const Hamburger = styled.div`
   @media (max-width: 600px) {
     display: flex;
     align-items: center;
-
-   
   }
 
   & svg {
@@ -103,4 +101,20 @@ export const HamburgerSvg = styled.svg.attrs((props) => ({
     translate: 5px -5px;
     rotate: 0.125turn;
   }
+`;
+
+export const Message = styled.div`
+  display: none;
+  position: absolute;
+  top: 2%;
+  right: 10%;
+  transformorigin: center;
+  background: red;
+  width: 3rem;
+  aspect-ratio: 1;
+  cursor: pointer;
+
+  //after display flex
+  align-items: center;
+  justify-content: center;
 `;

@@ -8,23 +8,13 @@ export const Container = styled.div`
   padding: 2rem 0 2rem 0;
   margin-top: 3rem;
   height: 500px;
-  /*clip-path: polygon(
-    20% 0%,
-    80% 0%,
-    100% 20%,
-    100% 80%,
-    80% 100%,
-    20% 100%,
-    0% 80%,
-    0% 20%
-  );*/
+
   @media (max-width: 600px) {
     border-radius: 0;
   }
 `;
 
 export const Item = styled.div`
-  --cnt: ${({ file }) => file};
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -40,7 +30,7 @@ export const Item = styled.div`
   }
 
   &::after {
-    content: "";
+    content: "${({ subject }) => subject}";
     position: absolute;
     inset: 0;
     background: inherit;

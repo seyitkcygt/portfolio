@@ -7,11 +7,14 @@ import {
   Link,
   Hamburger,
   HamburgerSvg,
+  Message,
 } from "./styles/navbar";
 
-export default function NavBar({ children, ...restProps }) {
-  return <Nav {...restProps}>{children}</Nav>;
-}
+const NavBar = React.forwardRef((props, ref) => (
+  <Nav ref={ref} {...props}>
+    {props.children}
+  </Nav>
+));
 
 NavBar.Logo = function NavBarLogo({ children }) {
   return <Logo>{children}</Logo>;
@@ -30,9 +33,11 @@ NavBar.NavLinks = function NavBarNavLinks({
   );
 };
 
-NavBar.Link = function NavbarLink({ children, href, ...restProps }) {
-  return <Link {...restProps}>{children}</Link>;
-};
+NavBar.Link = React.forwardRef((props, ref) => (
+  <Link ref={ref} href={props.href} {...props}>
+    {props.children}
+  </Link>
+));
 
 NavBar.Hamburger = function NavBarHamburger({ expanded, ...restProps }) {
   return (
@@ -48,3 +53,11 @@ NavBar.Hamburger = function NavBarHamburger({ expanded, ...restProps }) {
     </Hamburger>
   );
 };
+
+NavBar.Message = React.forwardRef((props, ref) => (
+  <Message ref={ref} {...props}>
+    {props.children}
+  </Message>
+));
+
+export default NavBar;
